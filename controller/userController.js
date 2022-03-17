@@ -25,7 +25,9 @@ const CreateUser = async (req, res, next) => {
 // alifiandy
 const GetAllUsers = async (req, res) => {
   try {
-    const userList = await User.findAll();
+    const userList = await User.findAll({
+      include: "post"
+    });
     if (userList) {
       res.status(200).json({
         message: "Successfully get user data",
@@ -89,8 +91,6 @@ const DeleteUser = async (req, res) => {
         message: "User Data Not Found"
       })
     }
-
-
   } catch (error) {
     return res.status(500).json({
       message: error.message
