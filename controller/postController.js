@@ -38,14 +38,20 @@ const CreatePost = async (req, res) => {
 
 const GetPost = async (req, res) => {
   try {
-    const posts = await Post.findAll({
+    const findposts = await Post.findAll({
       include: 'user'
     })
 
-    return res.status(200).json({
-      message: "Posts Successfully Found",
-      data: posts
-    })
+    if (findposts) {
+      return res.status(200).json({
+        message: "Posts Successfully Found",
+        data: findposts
+      })
+    } else {
+      return res.status(404).json({
+        message: "Post Data Is Empty"
+      })
+    }
   } catch (error) {
     console.log(error)
     return res.status(500).json({
